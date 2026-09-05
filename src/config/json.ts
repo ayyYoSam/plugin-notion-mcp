@@ -15,8 +15,12 @@ export async function writeJson(file: string, data: unknown) {
     recursive: true
   });
 
+  const tempFile = `${file}.tmp`;
+
   await fs.writeFile(
-    file,
+    tempFile,
     JSON.stringify(data, null, 2)
   );
+
+  await fs.rename(tempFile, file);
 }

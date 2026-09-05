@@ -63,12 +63,16 @@ export const installCommand = new Command("install")
       switch (client.id) {
         case "claude-desktop":
           await configureClaude(client.configPath, apiKey);
+
           console.log("✔ Claude Desktop configured");
+          console.log(`  ${client.configPath}`);
           break;
 
         case "cursor":
           await configureCursor(client.configPath, apiKey);
+
           console.log("✔ Cursor configured");
+          console.log(`  ${client.configPath}`);
           break;
       }
     }

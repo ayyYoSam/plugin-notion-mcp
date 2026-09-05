@@ -1,9 +1,12 @@
+import { createBackup } from "./backup.js";
 import { readJson, writeJson } from "./json.js";
 
 export async function configureClaude(
   configPath: string,
   apiKey: string
 ) {
+  await createBackup(configPath);
+
   const config = await readJson(configPath);
 
   config.mcpServers ??= {};
