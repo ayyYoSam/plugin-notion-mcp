@@ -3,6 +3,7 @@ import ora from "ora";
 
 import { getPlatform } from "../platforms/index.js";
 import { commandVersion } from "../utils/exec.js";
+import { detectClients } from "../clients/index.js";
 
 export const doctorCommand = new Command("doctor")
   .description("Check your MCP environment")
@@ -30,5 +31,16 @@ export const doctorCommand = new Command("doctor")
       npmSpinner.succeed(`npm ${npmVersion}`);
     } else {
       npmSpinner.fail("npm not found");
+    }
+
+    console.log();
+    console.log("MCP Clients");
+    console.log("─".repeat(32));
+
+    for (const client of detectClients()) {
+      const status = client.detected ? "✔" : "✖";
+      const config = client.hasConfig ? "config found" : "config missing";
+
+      console.log(`${status} ${client.name} (${config})`);
     }
   });
