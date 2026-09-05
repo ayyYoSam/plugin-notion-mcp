@@ -1,1 +1,1 @@
-export {};
+export { installWithNpm } from "./npm.js";
