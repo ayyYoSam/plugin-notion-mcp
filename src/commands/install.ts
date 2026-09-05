@@ -10,6 +10,8 @@ import {
   configureCursor
 } from "../config/index.js";
 
+import { validateNotionKey } from "../utils/validate.js";
+
 export const installCommand = new Command("install")
   .description("Install an MCP server")
   .argument("<server>", "MCP server name")
@@ -53,8 +55,21 @@ export const installCommand = new Command("install")
     console.log("Configuration");
     console.log("─".repeat(32));
 
-    const apiKey = await askEnv("NOTION_API_KEY");
+    let apiKey: string;
 
+    while (true) {
+      try {
+        apiKey = validateNotionKey(
+          await askEnv("NOTION_API_KEY")
+        );
+        break;
+      } catch (error) {
+        console.log();
+        console.log(`✖ ${(error as Error).message}`);
+        console.log("Try again.\n");
+      }
+    }
+    
     const clients = detectClients();
 
     for (const client of clients) {
