@@ -5,12 +5,14 @@ import { installWithNpm } from "../installer/index.js";
 
 import { askEnv } from "../prompts/env.js";
 import { detectClients } from "../clients/index.js";
+
 import {
   configureClaude,
   configureCursor
 } from "../config/index.js";
 
 import { validateNotionKey } from "../utils/validate.js";
+import { secrets } from "../secrets/index.js";
 
 export const installCommand = new Command("install")
   .description("Install an MCP server")
@@ -55,21 +57,36 @@ export const installCommand = new Command("install")
     console.log("Configuration");
     console.log("─".repeat(32));
 
-    let apiKey: string;
+    let apiKey = await secrets.get(
+      "plugin-notion-mcp",
+      "notion"
+    );
 
-    while (true) {
-      try {
-        apiKey = validateNotionKey(
-          await askEnv("NOTION_API_KEY")
-        );
-        break;
-      } catch (error) {
-        console.log();
-        console.log(`✖ ${(error as Error).message}`);
-        console.log("Try again.\n");
+    if (!apiKey) {
+      while (true) {
+        try {
+          apiKey = validateNotionKey(
+            await askEnv("NOTION_API_KEY")
+          );
+
+          await secrets.set(
+            "plugin-notion-mcp",
+            "notion",
+            apiKey
+          );
+
+          console.log("✔ Secret stored securely.");
+          break;
+        } catch (error) {
+          console.log();
+          console.log(`✖ ${(error as Error).message}`);
+          console.log("Try again.\n");
+        }
       }
+    } else {
+      console.log("✔ Using stored credentials.");
     }
-    
+
     const clients = detectClients();
 
     for (const client of clients) {
