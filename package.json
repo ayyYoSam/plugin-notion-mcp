@@ -1,27 +1,54 @@
 {
   "name": "plugin-notion-mcp",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "One command to install and configure the Notion MCP automatically.",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
+  "type": "module",
+
+  "bin": {
+    "plugin": "./dist/index.js"
   },
+
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "eslint src",
+    "test": "vitest",
+    "prepare": "npm run build"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ayyYoSam/plugin-notion-mcp.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+
+  "keywords": [
+    "mcp",
+    "notion",
+    "model-context-protocol",
+    "cli",
+    "typescript"
+  ],
+
+  "author": "Sam",
+  "license": "MIT",
+
   "bugs": {
     "url": "https://github.com/ayyYoSam/plugin-notion-mcp/issues"
   },
+
   "homepage": "https://github.com/ayyYoSam/plugin-notion-mcp#readme",
+
+  "engines": {
+    "node": ">=22"
+  },
+
   "dependencies": {
     "commander": "^15.0.0",
     "execa": "^10.0.1",
@@ -29,6 +56,7 @@
     "ora": "^9.4.1",
     "zod": "^4.5.4"
   },
+
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.4.1",
