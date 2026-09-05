@@ -38,9 +38,19 @@ export const doctorCommand = new Command("doctor")
     console.log("─".repeat(32));
 
     for (const client of detectClients()) {
-      const status = client.detected ? "✔" : "✖";
-      const config = client.hasConfig ? "config found" : "config missing";
+      const icon = client.detected ? "✔" : "✖";
 
-      console.log(`${status} ${client.name} (${config})`);
+      console.log(`${icon} ${client.name}`);
+
+      console.log(`  Scope : ${client.scope}`);
+      console.log(`  Config: ${client.configPath}`);
+
+      if (client.hasConfig) {
+        console.log("  Status: configuration found");
+      } else {
+        console.log("  Status: configuration missing");
+      }
+
+      console.log();
     }
   });

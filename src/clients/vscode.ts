@@ -5,18 +5,14 @@ import { ClientDetection } from "./types.js";
 import { getAppDataDir } from "../utils/paths.js";
 
 export function detectVSCode(): ClientDetection {
-  const configPath = path.join(
-    getAppDataDir(),
-    "Code",
-    "User",
-    "settings.json"
-  );
+  const userDir = path.join(getAppDataDir(), "Code", "User");
 
   return {
     id: "vscode",
     name: "VS Code",
-    detected: fs.existsSync(path.dirname(configPath)),
-    configPath,
-    hasConfig: fs.existsSync(configPath)
+    detected: fs.existsSync(userDir),
+    configPath: path.join(userDir, "settings.json"),
+    hasConfig: fs.existsSync(path.join(userDir, "settings.json")),
+    scope: "global"
   };
 }
