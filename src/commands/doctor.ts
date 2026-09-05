@@ -1,8 +1,34 @@
 import { Command } from "commander";
+import ora from "ora";
+
+import { getPlatform } from "../platforms/index.js";
+import { commandVersion } from "../utils/exec.js";
 
 export const doctorCommand = new Command("doctor")
   .description("Check your MCP environment")
-  .action(() => {
+  .action(async () => {
+    console.log();
     console.log("MCP Doctor");
-    console.log("Environment checks coming soon.");
+    console.log("─".repeat(32));
+
+    console.log(`Platform: ${getPlatform()}`);
+    console.log();
+
+    const nodeSpinner = ora("Checking Node.js").start();
+    const nodeVersion = await commandVersion("node");
+
+    if (nodeVersion) {
+      nodeSpinner.succeed(`Node.js ${nodeVersion}`);
+    } else {
+      nodeSpinner.fail("Node.js not found");
+    }
+
+    const npmSpinner = ora("Checking npm").start();
+    const npmVersion = await commandVersion("npm");
+
+    if (npmVersion) {
+      npmSpinner.succeed(`npm ${npmVersion}`);
+    } else {
+      npmSpinner.fail("npm not found");
+    }
   });
