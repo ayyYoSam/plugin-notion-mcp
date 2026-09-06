@@ -5,6 +5,7 @@ import { doctorCommand } from "./doctor.js";
 import { listCommand } from "./list.js";
 import { loginCommand } from "./login.js";
 import { logoutCommand } from "./logout.js";
+import { verifyCommand } from "./verify.js";
 
 export function registerCommands(program: Command) {
   program.addCommand(installCommand);
@@ -12,4 +13,5 @@ export function registerCommands(program: Command) {
   program.addCommand(listCommand);
   program.addCommand(loginCommand);
   program.addCommand(logoutCommand);
+  program.addCommand(verifyCommand);
 }

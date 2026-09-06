@@ -10,6 +10,11 @@ import { getStrategy } from "../strategy/index.js";
 import { validateNotionKey } from "../utils/validate.js";
 import { secrets } from "../secrets/index.js";
 
+import {
+  verifyPackage,
+  verifyCredentials
+} from "../verify/checks.js";
+
 export const installCommand = new Command("install")
   .description("Install an MCP server")
   .argument("<server>", "MCP server name")
@@ -140,6 +145,18 @@ export const installCommand = new Command("install")
       console.log(`  ${client.configPath}`);
     }
 
-    console.log();
-    console.log(`Done in ${elapsed}s.`);
+      console.log();
+      console.log(`Done in ${elapsed}s.`);
+
+      console.log();
+      console.log("Running verification...");
+
+      const packageInstalled = await verifyPackage();
+      const credentials = await verifyCredentials();
+
+      if (packageInstalled && credentials) {
+        console.log("✔ Installation verified.");
+      } else {
+        console.log("⚠ Verification failed. Run 'plugin verify'.");
+      }
   });
