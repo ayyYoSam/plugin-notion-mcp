@@ -1,3 +1,2 @@
-export { configureClaude } from "./claude.js";
-export { configureCursor } from "./cursor.js";
+export { configureClient } from "./configure.js";
 //# sourceMappingURL=index.js.map

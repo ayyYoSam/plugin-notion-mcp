@@ -1,15 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
-import { getAppDataDir } from "../utils/paths.js";
 export function detectVSCode() {
-    const userDir = path.join(getAppDataDir(), "Code", "User");
+    const configPath = path.join(process.cwd(), ".vscode", "mcp.json");
     return {
         id: "vscode",
         name: "VS Code",
-        detected: fs.existsSync(userDir),
-        configPath: path.join(userDir, "settings.json"),
-        hasConfig: fs.existsSync(path.join(userDir, "settings.json")),
-        scope: "global"
+        detected: fs.existsSync(path.join(process.cwd(), ".vscode")),
+        method: "config",
+        configPath,
+        hasConfig: fs.existsSync(configPath),
+        scope: "project"
     };
 }
 //# sourceMappingURL=vscode.js.map

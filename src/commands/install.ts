@@ -5,7 +5,7 @@ import { installWithNpm, runStep } from "../installer/index.js";
 
 import { askEnv } from "../prompts/env.js";
 import { detectClients } from "../clients/index.js";
-import { configureClient } from "../config/index.js";
+import { getStrategy } from "../strategy/index.js";
 
 import { validateNotionKey } from "../utils/validate.js";
 import { secrets } from "../secrets/index.js";
@@ -105,13 +105,15 @@ export const installCommand = new Command("install")
         for (const client of clients) {
           if (!client.detected) continue;
 
-          await configureClient(
+          const strategy = getStrategy(client.method);
+
+          await strategy.install({
             client,
             server,
-            {
+            env: {
               NOTION_API_KEY: apiKey
             }
-          );
+          });
         }
       }
     );

@@ -1,2 +1,2 @@
-import { ClientDetection } from "./types.js";
+import type { ClientDetection } from "./types.js";
 export declare function detectVSCode(): ClientDetection;

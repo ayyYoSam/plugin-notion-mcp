@@ -9,7 +9,8 @@ export function detectCursor() {
         detected: fs.existsSync(path.dirname(configPath)),
         configPath,
         hasConfig: fs.existsSync(configPath),
-        scope: "global"
+        scope: "global",
+        method: "config",
     };
 }
 //# sourceMappingURL=cursor.js.map

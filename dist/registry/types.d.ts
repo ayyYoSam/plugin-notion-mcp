@@ -5,6 +5,8 @@ export interface MCPServer {
     runtime: Runtime;
     package: string;
     env: string[];
+    command?: string;
+    args?: string[];
     homepage?: string;
     description?: string;
 }
