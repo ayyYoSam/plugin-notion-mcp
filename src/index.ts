@@ -3,6 +3,7 @@
 import { Command } from "commander";
 
 import { registerCommands } from "./commands/index.js";
+import { startServer } from "./server/index.js";
 
 const program = new Command();
 
@@ -13,4 +14,10 @@ program
 
 registerCommands(program);
 
-program.parse(process.argv);
+const hasCommand = process.argv.length > 2;
+
+if (hasCommand) {
+  program.parse(process.argv);
+} else {
+  await startServer();
+}
