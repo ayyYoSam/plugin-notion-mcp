@@ -1,11 +1,10 @@
 import { Command } from "commander";
 
 import { getServer } from "../registry/index.js";
-import { installWithNpm } from "../installer/index.js";
+import { installWithNpm, runStep } from "../installer/index.js";
 
 import { askEnv } from "../prompts/env.js";
 import { detectClients } from "../clients/index.js";
-
 import { configureClient } from "../config/index.js";
 
 import { validateNotionKey } from "../utils/validate.js";
@@ -22,6 +21,8 @@ export const installCommand = new Command("install")
       process.exit(1);
     }
 
+    const started = Date.now();
+
     console.log();
     console.log(`Installing ${server.name}`);
     console.log("─".repeat(32));
@@ -35,69 +36,108 @@ export const installCommand = new Command("install")
 
     console.log();
 
-    switch (server.runtime) {
-      case "npm":
-        await installWithNpm(server.package);
-        break;
+    let clients = detectClients();
 
-      default:
-        throw new Error(`Runtime ${server.runtime} is not supported yet.`);
+    await runStep(
+      "[1/4] Detecting environment",
+      async () => {
+        clients = detectClients();
+
+        if (!clients.some(client => client.detected)) {
+          throw new Error("No supported MCP client found.");
+        }
+      }
+    );
+
+    await runStep(
+      "[2/4] Installing package",
+      async () => {
+        switch (server.runtime) {
+          case "npm":
+            await installWithNpm(server.package);
+            break;
+
+          default:
+            throw new Error(
+              `Runtime ${server.runtime} is not supported yet.`
+            );
+        }
+      }
+    );
+
+    let apiKey = "";
+
+    if (server.env.length) {
+      apiKey = (await secrets.get(
+        "plugin-notion-mcp",
+        "notion"
+      )) ?? "";
+
+      if (!apiKey) {
+        while (true) {
+          try {
+            apiKey = validateNotionKey(
+              await askEnv("NOTION_API_KEY")
+            );
+
+            await secrets.set(
+              "plugin-notion-mcp",
+              "notion",
+              apiKey
+            );
+
+            console.log("✔ Secret stored securely.");
+            break;
+          } catch (error) {
+            console.log();
+            console.log(`✖ ${(error as Error).message}`);
+            console.log("Try again.\n");
+          }
+        }
+      } else {
+        console.log("✔ Using stored credentials.");
+      }
     }
 
-    if (!server.env.length) {
-      console.log();
-      console.log("Done.");
-      return;
+    await runStep(
+      "[3/4] Configuring clients",
+      async () => {
+        for (const client of clients) {
+          if (!client.detected) continue;
+
+          await configureClient(
+            client,
+            server,
+            {
+              NOTION_API_KEY: apiKey
+            }
+          );
+        }
+      }
+    );
+
+    await runStep(
+      "[4/4] Verifying installation",
+      async () => {
+        clients = detectClients();
+
+        if (!clients.some(client => client.detected)) {
+          throw new Error("Verification failed.");
+        }
+      }
+    );
+
+    const elapsed = ((Date.now() - started) / 1000).toFixed(1);
+
+    console.log();
+
+    for (const client of clients) {
+      if (!client.detected) continue;
+
+      console.log(`✔ ${client.name}`);
+      console.log(`  ${client.configPath}`);
     }
 
     console.log();
-    console.log("Configuration");
-    console.log("─".repeat(32));
-
-    let apiKey = await secrets.get(
-      "plugin-notion-mcp",
-      "notion"
-    );
-
-    if (!apiKey) {
-      while (true) {
-        try {
-          apiKey = validateNotionKey(
-            await askEnv("NOTION_API_KEY")
-          );
-
-          await secrets.set(
-            "plugin-notion-mcp",
-            "notion",
-            apiKey
-          );
-
-          console.log("✔ Secret stored securely.");
-          break;
-        } catch (error) {
-          console.log();
-          console.log(`✖ ${(error as Error).message}`);
-          console.log("Try again.\n");
-        }
-      }
-    } else {
-      console.log("✔ Using stored credentials.");
-    }
-
-    const clients = detectClients();
-
-      for (const client of clients) {
-        if (!client.detected) continue;
-
-        await configureClient(
-          client,
-          server,
-          {
-            NOTION_API_KEY: apiKey
-          }
-        );
-
-        console.log(`✔ ${client.name} configured`);
-        console.log(`  ${client.configPath}`);
-      }
+    console.log(`Done in ${elapsed}s.`);
   });
