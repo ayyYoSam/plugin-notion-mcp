@@ -5,9 +5,12 @@ import { getPlatform } from "../platforms/index.js";
 import { commandVersion } from "../utils/exec.js";
 import { detectClients } from "../clients/index.js";
 
+import { ensureConfig } from "../doctor/fix.js";
+
 export const doctorCommand = new Command("doctor")
   .description("Check your MCP environment")
-  .action(async () => {
+  .option("--fix", "Automatically fix supported issues")
+  .action(async (options) => {
     console.log();
     console.log("MCP Doctor");
     console.log("─".repeat(32));
@@ -37,20 +40,38 @@ export const doctorCommand = new Command("doctor")
     console.log("MCP Clients");
     console.log("─".repeat(32));
 
-    for (const client of detectClients()) {
+    const clients = detectClients();
+
+    for (const client of clients) {
       const icon = client.detected ? "✔" : "✖";
 
       console.log(`${icon} ${client.name}`);
-
       console.log(`  Scope : ${client.scope}`);
       console.log(`  Config: ${client.configPath}`);
-
-      if (client.hasConfig) {
-        console.log("  Status: configuration found");
-      } else {
-        console.log("  Status: configuration missing");
-      }
-
+      console.log(
+        `  Status: ${client.hasConfig ? "configuration found" : "configuration missing"}`
+      );
       console.log();
+    }
+
+    if (!options.fix) return;
+
+    console.log("Fixes");
+    console.log("─".repeat(32));
+
+    let fixed = 0;
+
+    for (const client of clients) {
+      if (client.hasConfig) continue;
+
+      await ensureConfig(client.configPath);
+
+      console.log(`✔ Created ${client.configPath}`);
+
+      fixed++;
+    }
+
+    if (!fixed) {
+      console.log("Nothing to fix.");
     }
   });
