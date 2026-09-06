@@ -38,9 +38,7 @@ export const verifyCommand = new Command("verify")
     for (const client of clients) {
       const ok = client.detected && client.hasConfig;
 
-      console.log(
-        `${ok ? "✔" : "✖"} ${client.name}`
-      );
+      console.log(`${ok ? "✔" : "✖"} ${client.name}`);
 
       if (ok) configured++;
     }
@@ -58,5 +56,5 @@ export const verifyCommand = new Command("verify")
 
     console.log("Run:");
     console.log();
-    console.log("plugin install notion");
+    console.log("plugin-mcp install notion");
   });

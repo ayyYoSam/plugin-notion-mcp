@@ -1,11 +1,12 @@
 import { Command } from "commander";
 import { secrets } from "../secrets/index.js";
 export const logoutCommand = new Command("logout")
-    .description("Remove stored credentials")
-    .argument("<server>", "MCP server name")
+    .description("Remove stored Notion credentials")
+    .argument("<server>", "Server name")
     .action(async (server) => {
     if (server !== "notion") {
-        console.error(`Unknown MCP server: ${server}`);
+        console.error(`Unknown server: ${server}`);
+        console.error("Supported server: notion");
         process.exit(1);
     }
     const removed = await secrets.delete("plugin-notion-mcp", "notion");

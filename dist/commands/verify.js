@@ -32,6 +32,6 @@ export const verifyCommand = new Command("verify")
     }
     console.log("Run:");
     console.log();
-    console.log("plugin install notion");
+    console.log("plugin-mcp install notion");
 });
 //# sourceMappingURL=verify.js.map

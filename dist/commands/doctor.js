@@ -5,11 +5,11 @@ import { commandVersion } from "../utils/exec.js";
 import { detectClients } from "../clients/index.js";
 import { ensureConfig } from "../doctor/fix.js";
 export const doctorCommand = new Command("doctor")
-    .description("Check your MCP environment")
+    .description("Inspect your Notion MCP environment")
     .option("--fix", "Automatically fix supported issues")
     .action(async (options) => {
     console.log();
-    console.log("MCP Doctor");
+    console.log("Plugin MCP Doctor");
     console.log("─".repeat(32));
     console.log(`Platform: ${getPlatform()}`);
     console.log();

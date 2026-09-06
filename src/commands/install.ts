@@ -22,7 +22,8 @@ export const installCommand = new Command("install")
     const server = getServer(serverId);
 
     if (!server) {
-      console.error(`Unknown MCP server: ${serverId}`);
+      console.error(`Unknown server: ${serverId}`);
+      console.error("Supported server: notion");
       process.exit(1);
     }
 
@@ -155,6 +156,6 @@ export const installCommand = new Command("install")
       if (packageInstalled && credentials) {
         console.log("✔ Installation verified.");
       } else {
-        console.log("⚠ Verification failed. Run 'plugin verify'.");
+        console.log("⚠ Verification failed. Run 'plugin-mcp verify'.");
       }
   });

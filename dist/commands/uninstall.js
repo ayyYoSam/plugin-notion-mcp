@@ -4,12 +4,13 @@ import { detectClients } from "../clients/index.js";
 import { removeServer, uninstallPackage } from "../uninstall/index.js";
 import { secrets } from "../secrets/index.js";
 export const uninstallCommand = new Command("uninstall")
-    .description("Remove an MCP server")
+    .description("Remove the Notion MCP server")
     .argument("<server>", "MCP server name")
     .action(async (serverId) => {
     const server = getServer(serverId);
     if (!server) {
-        console.error(`Unknown MCP server: ${serverId}`);
+        console.error(`Unknown server: ${serverId}`);
+        console.error("Supported server: notion");
         process.exit(1);
     }
     console.log();
@@ -31,6 +32,6 @@ export const uninstallCommand = new Command("uninstall")
         console.log("✔ Package removed");
     }
     console.log();
-    console.log("Done.");
+    console.log("Notion MCP removed.");
 });
 //# sourceMappingURL=uninstall.js.map
