@@ -41,18 +41,16 @@ export const installCommand = new Command("install")
 
     console.log();
 
-    let clients = detectClients();
+    let clients = await detectClients();
 
-    await runStep(
-      "[1/4] Detecting environment",
-      async () => {
-        clients = detectClients();
+    await runStep("[1/4] Detecting environment", async () => {
+      clients = await detectClients();
 
-        if (!clients.some(client => client.detected)) {
-          throw new Error("No supported MCP client found.");
-        }
+      if (!clients.some(client => client.detected)) {
+        throw new Error("No supported MCP client found.");
       }
-    );
+    }
+  );
 
     await runStep(
       "[2/4] Installing package",
@@ -126,8 +124,8 @@ export const installCommand = new Command("install")
     await runStep(
       "[4/4] Verifying installation",
       async () => {
-        clients = detectClients();
-
+      const clients = await detectClients();
+      
         if (!clients.some(client => client.detected)) {
           throw new Error("Verification failed.");
         }

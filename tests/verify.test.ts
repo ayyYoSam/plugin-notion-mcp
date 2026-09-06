@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("../src/verify/checks.js", () => ({
   verifyPackage: vi.fn().mockResolvedValue(true),
   verifyCredentials: vi.fn().mockResolvedValue(true),
-  verifyClients: vi.fn().mockReturnValue([
+  verifyClients: vi.fn().mockResolvedValue([
     {
       id: "cursor",
       name: "Cursor",
@@ -23,7 +23,7 @@ describe("verify", () => {
     expect(await checks.verifyPackage()).toBe(true);
     expect(await checks.verifyCredentials()).toBe(true);
 
-    const clients = checks.verifyClients();
+    const clients = await checks.verifyClients();
 
     expect(clients).toHaveLength(1);
 

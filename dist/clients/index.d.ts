@@ -1,2 +1,2 @@
-export declare function detectClients(): import("./types.js").ClientDetection[];
+export declare function detectClients(): Promise<import("./types.js").ClientDetection[]>;
 //# sourceMappingURL=index.d.ts.map

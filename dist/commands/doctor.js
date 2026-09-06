@@ -32,7 +32,7 @@ export const doctorCommand = new Command("doctor")
     console.log();
     console.log("Notion Clients");
     console.log("─".repeat(32));
-    const clients = detectClients();
+    const clients = await detectClients();
     for (const client of clients) {
         const icon = client.detected ? "✔" : "✖";
         console.log(`${icon} ${client.name}`);

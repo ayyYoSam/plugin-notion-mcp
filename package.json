@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/ayyYoSam/plugin-notion-mcp#readme",
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
   },
   "dependencies": {
     "commander": "^15.0.0",

@@ -1,1 +1,1 @@
-{"version":3,"file":"claude-desktop.d.ts","sourceRoot":"","sources":["../../src/clients/claude-desktop.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,YAAY,CAAC;AAGlD,wBAAgB,mBAAmB,IAAI,eAAe,CAqBrD"}
+{"version":3,"file":"claude-desktop.d.ts","sourceRoot":"","sources":["../../src/clients/claude-desktop.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,YAAY,CAAC;AAGlD,wBAAgB,mBAAmB,IAAI,eAAe,CAiBrD"}

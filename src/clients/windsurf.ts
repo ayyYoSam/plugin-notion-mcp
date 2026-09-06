@@ -5,25 +5,24 @@ import type { ClientDetection } from "./types.js";
 import { getAppDataDir } from "../utils/paths.js";
 
 export function detectWindsurf(): ClientDetection {
-  const configPath = path.join(
+  const appDir = path.join(
     getAppDataDir(),
     "Windsurf",
-    "User",
+    "User"
+  );
+
+  const configPath = path.join(
+    appDir,
     "mcp_config.json"
   );
 
   return {
     id: "windsurf",
     name: "Windsurf",
-
-    detected: fs.existsSync(path.dirname(configPath)),
-
     method: "config",
-
+    detected: fs.existsSync(appDir),
     configPath,
-
     hasConfig: fs.existsSync(configPath),
-
     scope: "global"
   };
 }

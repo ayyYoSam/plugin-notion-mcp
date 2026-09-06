@@ -4,17 +4,13 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
-  test:
-    name: Build & Test
+  build-test:
+    name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -26,17 +22,14 @@ jobs:
           - windows-latest
           - macos-latest
 
-        node:
-          - 22
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 20
           cache: npm
 
       - name: Install dependencies
@@ -45,8 +38,22 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run tests
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
         run: npm test
 
-      - name: Run lint
-        run: npm run lint
+      - name: Pack package
+        run: npm pack
+
+      - name: Install packed CLI
+        shell: bash
+        run: npm install -g ./plugin-notion-mcp-*.tgz
+
+      - name: Smoke test
+        shell: bash
+        run: |
+          plugin --help
+          plugin doctor
+          plugin verify

@@ -2,9 +2,10 @@ import { Command } from "commander";
 
 import {
   verifyPackage,
-  verifyCredentials,
-  verifyClients
+  verifyCredentials
 } from "../verify/checks.js";
+
+import { detectClients } from "../clients/index.js";
 
 export const verifyCommand = new Command("verify")
   .description("Verify your Notion MCP installation")
@@ -27,11 +28,10 @@ export const verifyCommand = new Command("verify")
     );
 
     console.log();
-
     console.log("Clients");
     console.log("─".repeat(32));
 
-    const clients = verifyClients();
+    const clients = await detectClients();
 
     let configured = 0;
 

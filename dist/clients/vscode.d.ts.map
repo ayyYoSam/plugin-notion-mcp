@@ -1,1 +1,1 @@
-{"version":3,"file":"vscode.d.ts","sourceRoot":"","sources":["../../src/clients/vscode.ts"],"names":[],"mappings":"AAGA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,YAAY,CAAC;AAElD,wBAAgB,YAAY,IAAI,eAAe,CAqB9C"}
+{"version":3,"file":"vscode.d.ts","sourceRoot":"","sources":["../../src/clients/vscode.ts"],"names":[],"mappings":"AAIA,OAAO,KAAK,EAAE,eAAe,EAAE,MAAM,YAAY,CAAC;AAElD,wBAAsB,YAAY,IAAI,OAAO,CAAC,eAAe,CAAC,CAyB7D"}

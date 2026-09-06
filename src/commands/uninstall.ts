@@ -25,7 +25,7 @@ export const uninstallCommand = new Command("uninstall")
     console.log(`Removing ${server.name}`);
     console.log("─".repeat(32));
 
-    const clients = detectClients();
+    const clients = await detectClients();
 
     for (const client of clients) {
       if (!client.detected) continue;
