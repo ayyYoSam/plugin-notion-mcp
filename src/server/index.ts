@@ -4,10 +4,20 @@ import express, {
 } from "express";
 
 import { createServer } from "node:http";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { openBrowser } from "./browser.js";
 
 const PORT = 3210;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const WEB_DIST = path.resolve(
+  __dirname,
+  "../../web/dist"
+);
 
 export async function startServer() {
   const app = express();
@@ -24,6 +34,12 @@ export async function startServer() {
       });
     }
   );
+
+  app.use(express.static(WEB_DIST));
+
+    app.get("/{*splat}", (_: Request, res: Response) => {
+    res.sendFile(path.join(WEB_DIST, "index.html"));
+    });
 
   const server = createServer(app);
 
