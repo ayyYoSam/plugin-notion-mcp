@@ -6,10 +6,7 @@ import { installWithNpm } from "../installer/index.js";
 import { askEnv } from "../prompts/env.js";
 import { detectClients } from "../clients/index.js";
 
-import {
-  configureClaude,
-  configureCursor
-} from "../config/index.js";
+import { configureClient } from "../config/index.js";
 
 import { validateNotionKey } from "../utils/validate.js";
 import { secrets } from "../secrets/index.js";
@@ -89,26 +86,18 @@ export const installCommand = new Command("install")
 
     const clients = detectClients();
 
-    for (const client of clients) {
-      if (!client.detected) continue;
+      for (const client of clients) {
+        if (!client.detected) continue;
 
-      switch (client.id) {
-        case "claude-desktop":
-          await configureClaude(client.configPath, apiKey);
+        await configureClient(
+          client,
+          server,
+          {
+            NOTION_API_KEY: apiKey
+          }
+        );
 
-          console.log("✔ Claude Desktop configured");
-          console.log(`  ${client.configPath}`);
-          break;
-
-        case "cursor":
-          await configureCursor(client.configPath, apiKey);
-
-          console.log("✔ Cursor configured");
-          console.log(`  ${client.configPath}`);
-          break;
+        console.log(`✔ ${client.name} configured`);
+        console.log(`  ${client.configPath}`);
       }
-    }
-
-    console.log();
-    console.log("Done.");
   });
