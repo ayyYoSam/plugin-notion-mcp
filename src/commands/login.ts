@@ -7,33 +7,31 @@ import { secrets } from "../secrets/index.js";
 export const loginCommand = new Command("login")
   .description("Store credentials securely")
   .argument("<server>", "MCP server name")
-  .action(async (server) => {
-
+  .action(async (server: string) => {
     if (server !== "notion") {
-      console.error("Only Notion is supported right now.");
+      console.error(`Unknown MCP server: ${server}`);
       process.exit(1);
     }
 
-    let key: string;
-
     while (true) {
       try {
-        key = validateNotionKey(
+        const key = validateNotionKey(
           await askEnv("NOTION_API_KEY")
         );
 
-        break;
+        await secrets.set(
+          "plugin-notion-mcp",
+          "notion",
+          key
+        );
+
+        console.log();
+        console.log("✔ Credentials stored securely.");
+
+        return;
       } catch (error) {
+        console.log();
         console.log(`✖ ${(error as Error).message}`);
       }
     }
-
-    await secrets.set(
-      "plugin-notion-mcp",
-      "notion",
-      key
-    );
-
-    console.log();
-    console.log("✔ Secret stored securely.");
   });

@@ -1,6 +1,11 @@
 import { Command } from "commander";
 import { getServer } from "../registry/index.js";
 import { installWithNpm } from "../installer/index.js";
+import { askEnv } from "../prompts/env.js";
+import { detectClients } from "../clients/index.js";
+import { configureClaude, configureCursor } from "../config/index.js";
+import { validateNotionKey } from "../utils/validate.js";
+import { secrets } from "../secrets/index.js";
 export const installCommand = new Command("install")
     .description("Install an MCP server")
     .argument("<server>", "MCP server name")
@@ -26,5 +31,51 @@ export const installCommand = new Command("install")
         default:
             throw new Error(`Runtime ${server.runtime} is not supported yet.`);
     }
+    if (!server.env.length) {
+        console.log();
+        console.log("Done.");
+        return;
+    }
+    console.log();
+    console.log("Configuration");
+    console.log("─".repeat(32));
+    let apiKey = await secrets.get("plugin-notion-mcp", "notion");
+    if (!apiKey) {
+        while (true) {
+            try {
+                apiKey = validateNotionKey(await askEnv("NOTION_API_KEY"));
+                await secrets.set("plugin-notion-mcp", "notion", apiKey);
+                console.log("✔ Secret stored securely.");
+                break;
+            }
+            catch (error) {
+                console.log();
+                console.log(`✖ ${error.message}`);
+                console.log("Try again.\n");
+            }
+        }
+    }
+    else {
+        console.log("✔ Using stored credentials.");
+    }
+    const clients = detectClients();
+    for (const client of clients) {
+        if (!client.detected)
+            continue;
+        switch (client.id) {
+            case "claude-desktop":
+                await configureClaude(client.configPath, apiKey);
+                console.log("✔ Claude Desktop configured");
+                console.log(`  ${client.configPath}`);
+                break;
+            case "cursor":
+                await configureCursor(client.configPath, apiKey);
+                console.log("✔ Cursor configured");
+                console.log(`  ${client.configPath}`);
+                break;
+        }
+    }
+    console.log();
+    console.log("Done.");
 });
 //# sourceMappingURL=install.js.map

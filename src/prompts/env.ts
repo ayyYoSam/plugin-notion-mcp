@@ -1,15 +1,10 @@
-import readline from "node:readline";
 import { stdin, stdout } from "node:process";
 
 export async function askEnv(name: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    const rl = readline.createInterface({
-      input: stdin,
-      output: stdout
-    });
-
     stdout.write(`${name}: `);
 
+    stdin.setEncoding("utf8");
     stdin.setRawMode?.(true);
     stdin.resume();
 
@@ -19,12 +14,9 @@ export async function askEnv(name: string): Promise<string> {
       stdin.setRawMode?.(false);
       stdin.pause();
       stdin.removeListener("data", onData);
-      rl.close();
     };
 
-    const onData = (buffer: Buffer) => {
-      const key = buffer.toString("utf8");
-
+    const onData = (key: string) => {
       switch (key) {
         case "\r":
         case "\n":
@@ -37,7 +29,6 @@ export async function askEnv(name: string): Promise<string> {
           stdout.write("\n");
           cleanup();
           reject(new Error("Cancelled by user"));
-
           return;
 
         case "\b":
