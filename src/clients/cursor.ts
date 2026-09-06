@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { ClientDetection } from "./types.js";
+import type { ClientDetection } from "./types.js";
 import { getHomeDir } from "../utils/paths.js";
 
 export function detectCursor(): ClientDetection {

@@ -5,6 +5,8 @@ import { join } from "node:path";
 import { tmpdir } from "node:os";
 
 import { removeServer } from "../src/uninstall/config.js";
+import { TEST_ROOT } from "./setup.js";
+
 
 describe("removeServer", () => {
   it("removes only the Notion MCP", async () => {
@@ -40,7 +42,7 @@ describe("removeServer", () => {
   });
 
   it("returns false when the server does not exist", async () => {
-    const dir = join(tmpdir(), "plugin-notion-mcp-uninstall-missing");
+    const dir = TEST_ROOT;
     await mkdir(dir, { recursive: true });
 
     const configPath = join(dir, "mcp.json");
@@ -66,7 +68,7 @@ describe("removeServer", () => {
   });
 
   it("creates a backup before removing", async () => {
-    const dir = join(tmpdir(), "plugin-notion-mcp-uninstall-backup");
+    const dir = TEST_ROOT;
     await mkdir(dir, { recursive: true });
 
     const configPath = join(dir, "mcp.json");

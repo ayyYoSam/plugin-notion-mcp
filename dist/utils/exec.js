@@ -11,7 +11,8 @@ export async function commandExists(command) {
 export async function commandVersion(command) {
     try {
         const { stdout } = await execa(command, ["--version"]);
-        return stdout.split("\n")[0];
+        const firstLine = stdout.split("\n")[0];
+        return firstLine ?? null;
     }
     catch {
         return null;

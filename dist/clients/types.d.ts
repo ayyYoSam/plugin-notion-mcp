@@ -8,3 +8,4 @@ export interface ClientDetection {
     hasConfig: boolean;
     scope: "global" | "project";
 }
+//# sourceMappingURL=types.d.ts.map

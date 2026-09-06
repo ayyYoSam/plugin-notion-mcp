@@ -12,8 +12,9 @@ export async function commandExists(command: string): Promise<boolean> {
 export async function commandVersion(command: string): Promise<string | null> {
   try {
     const { stdout } = await execa(command, ["--version"]);
-    return stdout.split("\n")[0];
-  } catch {
+    const firstLine = stdout.split("\n")[0];
+
+    return firstLine ?? null;  } catch {
     return null;
   }
 }

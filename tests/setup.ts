@@ -1,13 +1,19 @@
 import { beforeEach } from "vitest";
-import { rm } from "node:fs/promises";
+import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 
-const TEST_DIR = join(tmpdir(), "plugin-notion-mcp-tests");
+export let TEST_ROOT = "";
 
 beforeEach(async () => {
-  await rm(TEST_DIR, {
-    recursive: true,
-    force: true
-  });
+  if (TEST_ROOT) {
+    await rm(TEST_ROOT, {
+      recursive: true,
+      force: true
+    });
+  }
+
+  TEST_ROOT = await mkdtemp(
+    join(tmpdir(), "plugin-notion-mcp-")
+  );
 });

@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { TEST_ROOT } from "./setup.js";
+
 
 import { configureClient } from "../src/config/configure.js";
 
@@ -26,7 +27,7 @@ const cursorClient = (configPath: string) => ({
 
 describe("configureClient", () => {
   it("preserves existing MCP servers", async () => {
-    const dir = join(tmpdir(), "plugin-notion-mcp-tests");
+    const dir = TEST_ROOT;
     await mkdir(dir, { recursive: true });
 
     const configPath = join(dir, "mcp.json");
@@ -59,7 +60,7 @@ describe("configureClient", () => {
   });
 
   it("creates a backup before writing", async () => {
-    const dir = join(tmpdir(), "plugin-notion-mcp-tests-backup");
+    const dir = TEST_ROOT;
     await mkdir(dir, { recursive: true });
 
     const configPath = join(dir, "mcp.json");

@@ -9,3 +9,4 @@ export interface ClientStrategy {
     install(ctx: InstallContext): Promise<void>;
     verify(ctx: InstallContext): Promise<boolean>;
 }
+//# sourceMappingURL=types.d.ts.map

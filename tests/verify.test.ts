@@ -25,7 +25,11 @@ describe("verify", () => {
 
     const clients = checks.verifyClients();
 
-    expect(clients[0].detected).toBe(true);
-    expect(clients[0].hasConfig).toBe(true);
+    expect(clients).toHaveLength(1);
+
+    const client = clients[0]!;
+
+    expect(client.detected).toBe(true);
+    expect(client.hasConfig).toBe(true);
   });
 });

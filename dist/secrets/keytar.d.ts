@@ -4,3 +4,4 @@ export declare class KeytarStore implements SecretStore {
     get(service: string, account: string): Promise<string | null>;
     delete(service: string, account: string): Promise<boolean>;
 }
+//# sourceMappingURL=keytar.d.ts.map

@@ -10,3 +10,4 @@ export interface MCPServer {
     homepage?: string;
     description?: string;
 }
+//# sourceMappingURL=types.d.ts.map
