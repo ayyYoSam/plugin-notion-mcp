@@ -9,11 +9,16 @@ export async function configureClient(
   server: MCPServer,
   env: Record<string, string>
 ) {
-  await createBackup(client.configPath);
 
-  const config = await readJson(client.configPath);
+    await createBackup(client.configPath);
 
-  config.mcpServers ??= {};
+    const config = await readJson(client.configPath);
+
+    if (!config || typeof config !== "object") {
+        throw new Error("Invalid configuration file.");
+    }
+
+    config.mcpServers ??= {};
 
   const command =
     server.command ??

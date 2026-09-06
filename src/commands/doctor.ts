@@ -37,7 +37,7 @@ export const doctorCommand = new Command("doctor")
     }
 
     console.log();
-    console.log("MCP Clients");
+    console.log("Notion Clients");
     console.log("─".repeat(32));
 
     const clients = detectClients();
@@ -47,9 +47,14 @@ export const doctorCommand = new Command("doctor")
 
       console.log(`${icon} ${client.name}`);
       console.log(`  Scope : ${client.scope}`);
+      console.log(`  Method: ${client.method}`);
       console.log(`  Config: ${client.configPath}`);
       console.log(
-        `  Status: ${client.hasConfig ? "configuration found" : "configuration missing"}`
+        `  Status: ${
+          client.hasConfig
+            ? "configuration found"
+            : "configuration missing"
+        }`
       );
       console.log();
     }

@@ -13,6 +13,7 @@ export function detectCursor(): ClientDetection {
     detected: fs.existsSync(path.dirname(configPath)),
     configPath,
     hasConfig: fs.existsSync(configPath),
-    scope: "global"
+    scope: "global",
+    method: "config",
   };
 }
