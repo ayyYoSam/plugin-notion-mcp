@@ -1,5 +1,5 @@
 {
-  "name": "plugin-notion-mcp",
+  "name": "@ayyYoSam/plugin-notion-mcp",
   "version": "1.0.1",
   "description": "One command to install and configure the Notion MCP automatically.",
   "type": "module",
@@ -66,5 +66,8 @@
     "typescript-eslint": "^8.69.0",
     "vite": "^8.2.2",
     "vitest": "^5.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
