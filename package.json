@@ -1,5 +1,5 @@
 {
-  "name": "plugin-mcp",
+  "name": "plugin-notion-mcp",
   "version": "1.0.0",
   "description": "One command to install and configure the Notion MCP automatically.",
   "type": "module",
