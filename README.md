@@ -7,9 +7,8 @@
 
 One command to install and configure the Notion MCP automatically.
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/805dff80-d150-487d-85cd-8c064650864f" alt="Plugin MCP Logo" width="200"/>
-</p>
+<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/fec12151-faa5-4e6d-adbf-6cfd56e0273a" />
+
 
 ---
 
