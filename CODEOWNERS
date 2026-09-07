@@ -1,0 +1,11 @@
+# Global owner
+* @ayyYoSam
+
+# GitHub workflows
+/.github/ @ayyYoSam
+
+# CLI source
+/src/ @ayyYoSam
+
+# Tests
+/tests/ @ayyYoSam
