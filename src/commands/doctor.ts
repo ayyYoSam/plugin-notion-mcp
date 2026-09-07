@@ -3,7 +3,6 @@ import ora from "ora";
 
 import { getPlatform } from "../platforms/index.js";
 import { commandVersion } from "../utils/exec.js";
-import { detectClients } from "../clients/index.js";
 
 import { ensureConfig } from "../doctor/fix.js";
 import { verifyClients } from "../verify/checks.js";
