@@ -7,10 +7,21 @@
 
 One command to install and configure the Notion MCP automatically.
 
-<img width="200" height="200" alt="image" src="https://github.com/user-attachments/assets/fec12151-faa5-4e6d-adbf-6cfd56e0273a" />
+<img width="2172" height="724" alt="image" src="https://github.com/user-attachments/assets/6172ed10-6a9b-41e9-871d-cb473167bab1" />
 
 
 ---
+
+## Description
+
+Plugin MCP is a cross-platform CLI that makes installing and managing MCP servers simple, automated, and reliable.
+
+Instead of manually installing an MCP server, finding the configuration file of an MCP client, editing JSON configuration, setting environment variables, managing credentials, and checking whether everything was configured correctly, Plugin MCP provides a single workflow that handles the entire process.
+
+The project currently focuses on the official Notion MCP and allows users to install and configure it with a single command:
+
+Plugin MCP automatically detects the user's operating system and supported MCP clients, installs and configures the official Notion MCP, manages the required credentials securely, and verifies the resulting installation.
+The goal is to remove the repetitive and error-prone configuration work that usually comes with setting up MCP integrations. Users should not need to know where a particular client stores its configuration, which JSON structure it expects, or how the MCP server needs to be registered. Plugin MCP handles those differences automatically.
 
 ## Features
 
@@ -103,15 +114,6 @@ Plugin MCP automatically:
 3. Installs and configures the official Notion MCP.
 4. Stores credentials securely.
 5. Verifies the resulting configuration.
-
-## Project Structure
-
-This repository contains the Plugin MCP CLI and installation tooling.
-
-The web interface is planned as a separate project and is not part of this repository.
-
-5. Writes client configuration.
-6. Verifies the installation.
 
 ## License
 
