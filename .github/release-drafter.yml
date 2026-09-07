@@ -1,0 +1,48 @@
+name-template: "v$RESOLVED_VERSION"
+tag-template: "v$RESOLVED_VERSION"
+
+change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
+
+template: |
+  ## What's Changed
+
+  $CHANGES
+
+categories:
+  - title: "Features"
+    labels:
+      - enhancement
+      - feature
+
+  - title: "Bug Fixes"
+    labels:
+      - bug
+
+  - title: "Documentation"
+    labels:
+      - documentation
+
+  - title: "CI/CD"
+    labels:
+      - ci
+      - github-actions
+
+  - title: "Dependencies"
+    labels:
+      - dependencies
+
+version-resolver:
+  major:
+    labels:
+      - breaking-change
+  minor:
+    labels:
+      - enhancement
+      - feature
+  patch:
+    labels:
+      - bug
+      - dependencies
+      - documentation
+      - ci
+  default: patch
