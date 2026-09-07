@@ -1,10 +1,30 @@
 import { execa } from "execa";
+
 import type { ClientStrategy } from "./types.js";
 
+import {
+  mergeNotionServer,
+  writeClaudeConfig
+} from "../clients/claude-desktop.js";
+
 export const oauthStrategy: ClientStrategy = {
-  async install() {
-    const url =
-      "https://www.notion.so/profile/integrations";
+  async install({ client, server, env }) {
+    if (client.id === "claude-desktop") {
+      const config = mergeNotionServer({
+        command: "npx",
+        args: ["-y", server.package],
+        env: {
+          NOTION_API_KEY: env.NOTION_API_KEY
+        }
+      });
+
+      writeClaudeConfig(config);
+
+      console.log("✔ Claude Desktop configured.");
+      return;
+    }
+
+    const url = "https://www.notion.so/profile/integrations";
 
     switch (process.platform) {
       case "win32":

@@ -105,3 +105,21 @@ export function removeNotionServer(): ClaudeDesktopConfig {
 
   return config;
 }
+
+export function hasNotionServer(): boolean {
+  const config = readClaudeConfig();
+
+  return Boolean(config.mcpServers?.notion);
+}
+
+export function getNotionServer() {
+  const config = readClaudeConfig();
+
+  return config.mcpServers?.notion ?? null;
+}
+
+export function uninstallNotionServer(): void {
+  const config = removeNotionServer();
+
+  writeClaudeConfig(config);
+}
