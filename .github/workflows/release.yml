@@ -27,7 +27,7 @@ jobs:
       - run: npm test
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish --access public --registry=https://registry.npmjs.org
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
