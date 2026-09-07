@@ -43,7 +43,7 @@ export const doctorCommand = new Command("doctor")
     const clients = await verifyClients();
 
     for (const client of clients) {
-      const icon = client.detected ? "✔" : "✖";
+      const icon = client.valid ? "✔" : "✖";
 
       console.log(`${icon} ${client.name}`);
       console.log(`  Scope : ${client.scope}`);

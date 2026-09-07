@@ -2,9 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+
 import { TEST_ROOT } from "./setup.js";
-
-
 import { configureClient } from "../src/config/configure.js";
 
 const notionServer = {
@@ -15,9 +14,9 @@ const notionServer = {
   env: ["NOTION_API_KEY"]
 };
 
-const cursorClient = (configPath: string) => ({
-  id: "cursor",
-  name: "Cursor",
+const testClient = (configPath: string) => ({
+  id: "vscode",
+  name: "VS Code",
   detected: true,
   method: "config" as const,
   configPath,
@@ -43,17 +42,11 @@ describe("configureClient", () => {
       })
     );
 
-    await configureClient(
-      cursorClient(configPath),
-      notionServer,
-      {
-        NOTION_API_KEY: "secret_test"
-      }
-    );
+    await configureClient(testClient(configPath), notionServer, {
+      NOTION_API_KEY: "secret_test"
+    });
 
-    const result = JSON.parse(
-      await readFile(configPath, "utf8")
-    );
+    const result = JSON.parse(await readFile(configPath, "utf8"));
 
     expect(result.mcpServers.github).toBeDefined();
     expect(result.mcpServers.notion).toBeDefined();
@@ -65,23 +58,13 @@ describe("configureClient", () => {
 
     const configPath = join(dir, "mcp.json");
 
-    await writeFile(
-      configPath,
-      JSON.stringify({})
-    );
+    await writeFile(configPath, JSON.stringify({}));
 
-    await configureClient(
-      cursorClient(configPath),
-      notionServer,
-      {
-        NOTION_API_KEY: "secret_test"
-      }
-    );
+    await configureClient(testClient(configPath), notionServer, {
+      NOTION_API_KEY: "secret_test"
+    });
 
-    const backup = await readFile(
-      `${configPath}.bak`,
-      "utf8"
-    );
+    const backup = await readFile(`${configPath}.bak`, "utf8");
 
     expect(backup).toBe("{}");
   });

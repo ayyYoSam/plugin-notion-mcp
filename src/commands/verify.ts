@@ -2,10 +2,9 @@ import { Command } from "commander";
 
 import {
   verifyPackage,
-  verifyCredentials
+  verifyCredentials,
+  verifyClients
 } from "../verify/checks.js";
-
-import { detectClients } from "../clients/index.js";
 
 export const verifyCommand = new Command("verify")
   .description("Verify your Notion MCP installation")
@@ -31,16 +30,23 @@ export const verifyCommand = new Command("verify")
     console.log("Clients");
     console.log("─".repeat(32));
 
-    const clients = await detectClients();
+    const clients = await verifyClients();
 
     let configured = 0;
 
     for (const client of clients) {
-      const ok = client.detected && client.hasConfig;
+      if (!client.detected) {
+        console.log(`✖ ${client.name} (not detected)`);
+        continue;
+      }
 
-      console.log(`${ok ? "✔" : "✖"} ${client.name}`);
+      console.log(
+        `${client.valid ? "✔" : "✖"} ${client.name}`
+      );
 
-      if (ok) configured++;
+      if (client.valid) {
+        configured++;
+      }
     }
 
     console.log();
@@ -57,4 +63,5 @@ export const verifyCommand = new Command("verify")
     console.log("Run:");
     console.log();
     console.log("plugin-mcp install notion");
+    process.exit(1);
   });

@@ -34,7 +34,7 @@ export const doctorCommand = new Command("doctor")
     console.log("─".repeat(32));
     const clients = await verifyClients();
     for (const client of clients) {
-        const icon = client.detected ? "✔" : "✖";
+        const icon = client.valid ? "✔" : "✖";
         console.log(`${icon} ${client.name}`);
         console.log(`  Scope : ${client.scope}`);
         console.log(`  Method: ${client.method}`);
