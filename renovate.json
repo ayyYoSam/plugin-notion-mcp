@@ -16,10 +16,7 @@
       "matchPackageNames": [
         "typescript"
       ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "enabled": false
+      "allowedVersions": "<7"
     },
     {
       "matchManagers": [
