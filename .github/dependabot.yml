@@ -11,6 +11,11 @@ updates:
 
     open-pull-requests-limit: 10
 
+    ignore:
+      - dependency-name: "typescript"
+        update-types:
+          - "version-update:semver-major"
+
     commit-message:
       prefix: "deps"
 
