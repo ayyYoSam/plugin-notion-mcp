@@ -4,6 +4,7 @@ import { getPlatform } from "../platforms/index.js";
 import { commandVersion } from "../utils/exec.js";
 import { detectClients } from "../clients/index.js";
 import { ensureConfig } from "../doctor/fix.js";
+import { verifyClients } from "../verify/checks.js";
 export const doctorCommand = new Command("doctor")
     .description("Inspect your Notion MCP environment")
     .option("--fix", "Automatically fix supported issues")
@@ -32,16 +33,18 @@ export const doctorCommand = new Command("doctor")
     console.log();
     console.log("Notion Clients");
     console.log("─".repeat(32));
-    const clients = await detectClients();
+    const clients = await verifyClients();
     for (const client of clients) {
         const icon = client.detected ? "✔" : "✖";
         console.log(`${icon} ${client.name}`);
         console.log(`  Scope : ${client.scope}`);
         console.log(`  Method: ${client.method}`);
         console.log(`  Config: ${client.configPath}`);
-        console.log(`  Status: ${client.hasConfig
-            ? "configuration found"
-            : "configuration missing"}`);
+        console.log(`  Status: ${client.valid
+            ? "Notion MCP configured"
+            : client.hasConfig
+                ? "configuration found (Notion MCP missing)"
+                : "configuration missing"}`);
         console.log();
     }
     if (!options.fix)

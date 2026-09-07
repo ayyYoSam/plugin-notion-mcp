@@ -10,6 +10,10 @@ import {
 
 import { secrets } from "../secrets/index.js";
 
+import {
+  uninstallNotionServer
+} from "../clients/claude-desktop.js";
+
 export const uninstallCommand = new Command("uninstall")
   .description("Remove the Notion MCP server")
   .argument("<server>", "MCP server name")
@@ -31,13 +35,21 @@ export const uninstallCommand = new Command("uninstall")
     for (const client of clients) {
       if (!client.detected) continue;
 
-      const removed = await removeServer(
-        client.configPath,
-        server.id
-      );
+        if (client.id === "claude-desktop") {
+          uninstallNotionServer();
 
-      if (removed) {
-        console.log(`✔ ${client.name} cleaned`);
+          console.log(`✔ ${client.name} cleaned`);
+
+          continue;
+        }
+
+        const removed = await removeServer(
+          client.configPath,
+          server.id
+        );
+
+        if (removed) {
+          console.log(`✔ ${client.name} cleaned`);
       }
     }
 
