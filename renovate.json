@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    "group:allNonMajor"
+  ],
+  "timezone": "America/Sao_Paulo",
+  "schedule": [
+    "after 9pm every day"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "typescript"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "GitHub Actions"
+    }
+  ]
+}
