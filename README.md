@@ -16,7 +16,7 @@ One command to install and configure the Notion MCP automatically.
 ## Features
 
 * One-command Notion MCP installation
-* Automatic client detection
+* Automatic MCP client detection
 * Secure credential storage
 * Environment verification
 * Cross-platform support
@@ -24,10 +24,16 @@ One command to install and configure the Notion MCP automatically.
 
 ## Installation
 
-Install the CLI globally:
+Install the package:
 
 ```bash
-npm install -g plugin-notion-mcp
+npm i plugin-notion-mcp
+```
+
+Or install it globally to use the CLI directly:
+
+```bash
+npm i -g plugin-notion-mcp
 ```
 
 Install and configure the Notion MCP:
@@ -38,7 +44,7 @@ plugin-mcp install notion
 
 ## Quick Start
 
-Common commands you'll use after installation.
+Common commands for managing your Notion MCP installation.
 
 ### Inspect your environment
 
@@ -46,7 +52,7 @@ Common commands you'll use after installation.
 plugin-mcp doctor
 ```
 
-Detects your platform, Node.js, npm and supported MCP clients.
+Detects your platform, Node.js, npm, and supported MCP clients.
 
 ### Verify your installation
 
@@ -54,25 +60,25 @@ Detects your platform, Node.js, npm and supported MCP clients.
 plugin-mcp verify
 ```
 
-Checks that the package, credentials and client configuration are ready.
+Checks that the Notion MCP installation, credentials, and client configuration are ready.
 
 ### Manage credentials
 
-Store your Notion API key securely.
+Store your Notion API key securely:
 
 ```bash
 plugin-mcp login notion
 ```
 
-Remove the stored credentials.
+Remove the stored credentials:
 
 ```bash
 plugin-mcp logout notion
 ```
 
-### Remove Plugin MCP
+### Uninstall
 
-Completely remove the Notion MCP and its configuration.
+Completely remove the Notion MCP and its configuration:
 
 ```bash
 plugin-mcp uninstall notion
@@ -94,9 +100,17 @@ plugin-mcp uninstall notion
 Plugin MCP automatically:
 
 1. Detects your operating system.
-2. Finds supported MCP clients.
-3. Installs the official Notion MCP.
+2. Detects supported MCP clients.
+3. Installs and configures the official Notion MCP.
 4. Stores credentials securely.
+5. Verifies the resulting configuration.
+
+## Project Structure
+
+This repository contains the Plugin MCP CLI and installation tooling.
+
+The web interface is planned as a separate project and is not part of this repository.
+
 5. Writes client configuration.
 6. Verifies the installation.
 
