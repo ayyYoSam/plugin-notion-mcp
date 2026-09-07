@@ -1,8 +1,11 @@
-import keytar from "keytar";
 export class KeytarStore {
+    async keytar() {
+        return await import("keytar");
+    }
     async set(service, account, secret) {
         try {
-            await keytar.setPassword(service, account, secret);
+            const keytar = await this.keytar();
+            await keytar.default.setPassword(service, account, secret);
         }
         catch {
             throw new Error("Unable to store credentials securely.");
@@ -10,7 +13,8 @@ export class KeytarStore {
     }
     async get(service, account) {
         try {
-            return await keytar.getPassword(service, account);
+            const keytar = await this.keytar();
+            return await keytar.default.getPassword(service, account);
         }
         catch {
             return null;
@@ -18,7 +22,8 @@ export class KeytarStore {
     }
     async delete(service, account) {
         try {
-            return await keytar.deletePassword(service, account);
+            const keytar = await this.keytar();
+            return await keytar.default.deletePassword(service, account);
         }
         catch {
             return false;

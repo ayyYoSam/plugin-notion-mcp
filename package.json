@@ -1,6 +1,6 @@
 {
   "name": "@ayyYoSam/plugin-notion-mcp",
-  "version": "1.0.1",
+  "version": "1.5.1",
   "description": "One command to install and configure the Notion MCP automatically.",
   "type": "module",
   "bin": {
