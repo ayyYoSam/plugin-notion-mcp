@@ -50,7 +50,6 @@ export const verifyCommand = new Command("verify")
     }
 
     console.log();
-
     if (
       packageInstalled &&
       credentials &&
