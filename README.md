@@ -114,7 +114,3 @@ Plugin MCP automatically:
 3. Installs and configures the official Notion MCP.
 4. Stores credentials securely.
 5. Verifies the resulting configuration.
-
-## License
-
-MIT License.
