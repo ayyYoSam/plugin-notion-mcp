@@ -32,6 +32,8 @@ The goal is to remove the repetitive and error-prone configuration work that usu
 * Cross-platform support
 * Clean uninstall
 
+---
+
 ## Installation
 
 Install the package:
@@ -51,6 +53,8 @@ Install and configure the Notion MCP:
 ```bash
 plugin-mcp install notion
 ```
+
+---
 
 ## Quick Start
 
