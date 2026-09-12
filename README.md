@@ -109,6 +109,8 @@ plugin-mcp uninstall notion
 | Cursor         | ✓      |
 | Windsurf       | ✓      |
 
+---
+
 ## How it works
 
 Plugin MCP automatically:
