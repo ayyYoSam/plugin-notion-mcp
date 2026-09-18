@@ -9,7 +9,6 @@ One command to install and configure the Notion MCP automatically.
 
 <img width="2172" height="724" alt="image" src="https://github.com/user-attachments/assets/6172ed10-6a9b-41e9-871d-cb473167bab1" />
 
-
 ---
 
 ## Description
